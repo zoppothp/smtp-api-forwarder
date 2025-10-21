@@ -25,6 +25,8 @@ services:
       - email-service
     restart: unless-stopped
     command: >
-      sh -c "echo '* * * * * /usr/local/bin/update_blocklist.sh' | crontab - &&
-             cron &&
+      sh -c "apk add --no-cache dcron &&
+             echo '* * * * * /usr/local/bin/update_blocklist.sh' | crontab - &&
+             crond &&
              nginx -g 'daemon off;'"
+
