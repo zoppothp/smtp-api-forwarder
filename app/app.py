@@ -15,7 +15,7 @@ API_KEY = os.getenv("API_KEY")
 # Only allow CORS for www.zoppoth.at
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://www.zoppoth.at", "http://www.zoppoth.at"],
+    allow_origins=["https://www.zoppoth.at", "https://zoppoth.at"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
