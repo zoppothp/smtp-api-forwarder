@@ -95,6 +95,8 @@ async def send_email(
 
     # try:
     with smtplib.SMTP_SSL("mx151a.netcup.net", 465) as server:
+        print(f"SMTP USER: {os.getenv("SMTP_USER")}")
+        print(f"SMTP USER: {os.getenv("SMTP_PASSWORD")}")
         server.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASSWORD"))
         server.sendmail(booking.email, "buchungen@zoppoth.at", msg.as_string())
     return {"status": "Email sent successfully"}
