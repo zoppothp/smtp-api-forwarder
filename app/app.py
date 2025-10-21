@@ -93,13 +93,13 @@ async def send_email(
     msg["Subject"] = f"Neue Buchungsanfrage von {booking.name}"
     msg.attach(MIMEText(mail_content, "plain"))
 
-    try:
-        with smtplib.SMTP_SSL("mx151a.netcup.net", 465) as server:
-            server.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASSWORD"))
-            server.sendmail(booking.email, "buchungen@zoppoth.at", msg.as_string())
-        return {"status": "Email sent successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error sending email: {str(e)}")
+    # try:
+    with smtplib.SMTP_SSL("mx151a.netcup.net", 465) as server:
+        server.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASSWORD"))
+        server.sendmail(booking.email, "buchungen@zoppoth.at", msg.as_string())
+    return {"status": "Email sent successfully"}
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Error sending email: {str(e)}")
 
 @app.get("/")
 def read_root():
