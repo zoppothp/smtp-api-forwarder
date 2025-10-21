@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   email-service:
     build: ./app
@@ -10,13 +9,14 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - API_KEY=${API_KEY}
     restart: unless-stopped
-
   nginx:
     image: nginx:alpine
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/ssl:/etc/nginx/ssl
     depends_on:
       - email-service
     restart: unless-stopped
