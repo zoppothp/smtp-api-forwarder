@@ -51,10 +51,12 @@ async def send_email(
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
     
-    allowed_domain = "www.zoppoth.at"
-    referer_ok = referer and allowed_domain in referer
-    origin_ok = origin and (origin == f"https://{allowed_domain}" or origin == f"http://{allowed_domain}")
-
+    allowed_domains = ["zoppoth.at", "www.zoppoth.at", "ebet.at", "www.ebet.at"]
+    referer_ok = referer and any(domain in referer for domain in allowed_domains)
+    origin_ok = origin and any(
+        origin in [f"https://{domain}", f"http://{domain}"]
+        for domain in allowed_domains
+    )
     if not referer_ok and not origin_ok:
         raise HTTPException(status_code=403, detail="Forbidden: Request not from allowed domain.")
 
